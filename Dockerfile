@@ -2,19 +2,11 @@
 
 WORKDIR /app
 
-# Install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy application
+# Copy only the essential file
 COPY app.py .
-COPY environment.py .
-COPY tasks.py .
-COPY inference.py .
-COPY openenv.yaml .
 
 # Expose port
 EXPOSE 7860
 
-# Run
+# Run the app
 CMD ["python", "-u", "app.py"]
