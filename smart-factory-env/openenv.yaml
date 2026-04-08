@@ -1,0 +1,66 @@
+name: smart-factory-env
+version: 1.0.0
+description: Smart Factory Inventory Management for AI agent learning
+
+environment:
+  class: SmartFactoryEnv
+  module: environment
+  
+action_space:
+  type: Box
+  shape: [3]
+  low: [0, 0, 0]
+  high: [2, 1, 1]
+  description: |
+    action[0]: reorder_multiplier (0-2) - How aggressively to reorder
+    action[1]: supplier_premium (0-1) - Pay extra for reliable delivery
+    action[2]: maintenance (0-1) - Investment in machine maintenance
+
+observation_space:
+  type: Dict
+  fields:
+    inventory_levels:
+      type: Dict
+      keys: [electronics, mechanical, raw_materials]
+      values: int
+    pending_orders:
+      type: Dict
+      keys: [electronics, mechanical, raw_materials]
+      values: int
+    supplier_reliability:
+      type: float
+      range: [0, 1]
+    machine_health:
+      type: float
+      range: [0, 1]
+    cash_reserve:
+      type: float
+    day:
+      type: int
+    total_cost:
+      type: float
+
+reward:
+  range: [0, 1]
+  description: Higher reward for lower costs and good machine health
+
+tasks:
+  easy:
+    description: Stable demand, reliable suppliers
+    max_steps: 365
+    target_score: 0.85
+    
+  medium:
+    description: Variable demand, occasional supplier issues
+    max_steps: 365
+    target_score: 0.70
+    
+  hard:
+    description: High demand volatility, unreliable suppliers, machine degradation
+    max_steps: 365
+    target_score: 0.55
+
+metadata:
+  author: "Your Name"
+  real_world_domain: "Manufacturing & Inventory Management"
+  tags: ["inventory", "supply-chain", "optimization"]

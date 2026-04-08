@@ -1,0 +1,102 @@
+# Hugging Face Spaces Configuration
+# File: space_config.yaml
+
+title: Smart Factory Inventory Management
+emoji: 🏭
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_file: app.py
+pinned: false
+license: mit
+python_version: 3.9
+sdk_version: 1.0.0
+
+# Tags for discoverability
+tags:
+  - reinforcement-learning
+  - openenv
+  - inventory-management
+  - supply-chain
+  - ai-agent
+  - manufacturing
+  - optimization
+  - python
+
+# Space metadata
+short_description: "OpenEnv-compliant AI environment for smart factory inventory optimization"
+full_description: |
+  This environment simulates a real-world smart factory with:
+  - Multi-product inventory management
+  - Uncertain demand patterns
+  - Supplier reliability issues
+  - Machine degradation
+  - Financial constraints
+  
+  Perfect for training and evaluating AI agents on supply chain optimization tasks.
+
+# Resource requirements (Hugging Face free tier)
+resources:
+  cpu: 2
+  memory: 4GB
+  disk: 10GB
+  gpu: false
+
+# Environment variables (if needed)
+env:
+  - name: "OPENENV_VERBOSE"
+    value: "0"
+  - name: "SEED"
+    value: "42"
+
+# Hardware specifications
+hardware:
+  inference: cpu
+  training: cpu
+
+# Widgets for interactive demo
+widgets:
+  - name: task_selector
+    type: radio
+    label: "Task Difficulty"
+    options:
+      - value: easy
+        label: "Easy - Stable Demand"
+      - value: medium
+        label: "Medium - Variable Demand"
+      - value: hard
+        label: "Hard - High Uncertainty"
+    default: medium
+  
+  - name: days_slider
+    type: slider
+    label: "Simulation Duration (Days)"
+    min: 30
+    max: 365
+    step: 30
+    default: 180
+
+# Social media preview
+social_preview:
+  title: "🏭 Smart Factory Inventory Management"
+  description: "Train AI agents to optimize real-world factory operations with supply chain uncertainty"
+  image: "preview.png"
+
+# Citation information
+citation:
+  title: "Smart Factory Inventory Management Environment"
+  authors: ["Your Name"]
+  year: 2024
+  type: "software"
+  url: "https://huggingface.co/spaces/YOUR_USERNAME/smart-factory-env"
+
+# Maintenance settings
+maintainers:
+  - "YOUR_USERNAME"
+
+# Web app settings
+webapp:
+  enable: true
+  default_page: "simulation"
+  theme: "dark"
+  layout: "grid"
