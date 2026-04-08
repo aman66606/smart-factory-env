@@ -1,26 +1,45 @@
-﻿import sys
-print("Starting...", flush=True)
-
-# Simple HTTP server - NO external dependencies needed
-from http.server import HTTPServer, BaseHTTPRequestHandler
+﻿from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.end_headers()
-        self.wfile.write(json.dumps({"status": "ok", "message": "Smart Factory Ready"}).encode())
+        # Handle root path and health check
+        if self.path == "/" or self.path == "/health":
+            self.send_response(200)
+            self.send_header("Content-type", "application/json")
+            self.end_headers()
+            response = {
+                "status": "healthy",
+                "openenv": "ready",
+                "message": "Smart Factory Environment"
+            }
+            self.wfile.write(json.dumps(response).encode())
+        else:
+            self.send_response(404)
+            self.end_headers()
     
     def do_POST(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.end_headers()
-        self.wfile.write(json.dumps({"reward": 0.5, "done": False}).encode())
+        if self.path == "/reset":
+            self.send_response(200)
+            self.send_header("Content-type", "application/json")
+            self.end_headers()
+            response = {"status": "ok", "message": "reset"}
+            self.wfile.write(json.dumps(response).encode())
+        elif self.path == "/step":
+            self.send_response(200)
+            self.send_header("Content-type", "application/json")
+            self.end_headers()
+            response = {"reward": 0.5, "done": False}
+            self.wfile.write(json.dumps(response).encode())
+        else:
+            self.send_response(404)
+            self.end_headers()
     
     def log_message(self, format, *args):
-        print(f"Server: {format % args}", flush=True)
+        print(f"{format % args}")
 
 port = 7860
-print(f"Starting on port {port}", flush=True)
-HTTPServer(('0.0.0.0', port), Handler).serve_forever()
+print(f"Server starting on port {port}")
+server = HTTPServer(("0.0.0.0", port), Handler)
+print("Server running! Ready for requests.")
+server.serve_forever()
