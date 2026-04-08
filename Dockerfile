@@ -2,19 +2,18 @@
 
 WORKDIR /app
 
-# Copy requirements first for better caching
+# Copy requirements
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir numpy pyyaml
 
-# Copy application files
+# Copy all files
 COPY app.py .
 COPY environment.py .
 COPY tasks.py .
 COPY inference.py .
 COPY openenv.yaml .
-COPY README.md .
 
-# Expose port
+# Expose the port
 EXPOSE 7860
 
 # Run the app
