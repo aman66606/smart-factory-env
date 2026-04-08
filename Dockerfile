@@ -2,19 +2,19 @@
 
 WORKDIR /app
 
-# Copy requirements
+# Install dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir numpy pyyaml
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy all files
+# Copy application
 COPY app.py .
 COPY environment.py .
 COPY tasks.py .
 COPY inference.py .
 COPY openenv.yaml .
 
-# Expose the port
+# Expose port
 EXPOSE 7860
 
-# Run the app
-CMD ["python", "app.py"]
+# Run
+CMD ["python", "-u", "app.py"]
